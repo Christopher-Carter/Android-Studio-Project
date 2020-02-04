@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ShowResultsActivity">
+
+    <Button
+        android:id="@+id/buttonFinish"
+        android:layout_width="124dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="24dp"
+        android:onClick="onFinishClicked"
+        android:text="Finish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPrediction" />
+
+    <TextView
+        android:id="@+id/textViewPrediction"
+        android:layout_width="365dp"
+        android:layout_height="141dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center|top"
+        android:text="PREDICTION"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBasicResults" />
+
+    <TextView
+        android:id="@+id/textViewBasicResults"
+        android:layout_width="366dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center|top"
+        android:text="BASIC RESULTS AND DEBUG INFO"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

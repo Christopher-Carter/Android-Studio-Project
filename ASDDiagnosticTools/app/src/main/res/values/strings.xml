@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">ASD Diagnostic Tools</string>
+    <string name="title_activity_personal_questions">Personal Questions</string>
+    <string-array name="ethnicities">
+        <item>African</item>
+        <item>African American</item>
+        <item>Arab</item>
+        <item>Asian</item>
+        <item>Hispanic</item>
+        <item>Kurdish</item>
+        <item>Latino</item>
+        <item>Native Indian</item>
+        <item>Pacifika</item>
+        <item>Persian</item>
+        <item>Turkish</item>
+        <item>White European</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="peopleCompletingSurvey">
+        <item>Parent</item>
+        <item>Relative</item>
+        <item>Health Care Professional</item>
+        <item>Self</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="countries">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+        <item>Five</item>
+    </string-array>
+</resources>

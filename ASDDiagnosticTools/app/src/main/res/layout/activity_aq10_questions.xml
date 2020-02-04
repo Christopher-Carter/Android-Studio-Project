@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewQuestionText"
+        android:layout_width="365dp"
+        android:layout_height="422dp"
+        android:layout_marginTop="23dp"
+        android:text="TextView"
+        android:textSize="44sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/buttonNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="onNextClicked"
+        android:text="Next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Next" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="onBackClicked"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Back" />
+
+    <LinearLayout
+        android:layout_width="402dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="53dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewQuestionText"
+        app:layout_constraintVertical_bias="0.42000002">
+
+        <ToggleButton
+            android:id="@+id/toggleButtonDefinitelyAgree"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:onClick="onOptionClicked"
+            android:text="ToggleButton"
+            android:textOff="Definitely Agree"
+            android:textOn="Definitely Agree" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonSlightlyAgree"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:onClick="onOptionClicked"
+            android:text="ToggleButton"
+            android:textOff="Slightly Agree"
+            android:textOn="Slightly Agree" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonSlightlyDisagree"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:onClick="onOptionClicked"
+            android:text="ToggleButton"
+            android:textOff="Slightly Disagree"
+            android:textOn="Slightly Disagree" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonDefinitelyDisagree"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:onClick="onOptionClicked"
+            android:text="ToggleButton"
+            android:textOff="Definitely Disagree"
+            android:textOn="Definitely Disagree" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
