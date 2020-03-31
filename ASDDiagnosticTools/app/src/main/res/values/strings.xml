@@ -2,32 +2,108 @@
     <string name="app_name">ASD Diagnostic Tools</string>
     <string name="title_activity_personal_questions">Personal Questions</string>
     <string-array name="ethnicities">
-        <item>African</item>
-        <item>African American</item>
-        <item>Arab</item>
+        <item>Aboriginal</item>
         <item>Asian</item>
+        <item>Black</item>
         <item>Hispanic</item>
-        <item>Kurdish</item>
         <item>Latino</item>
-        <item>Native Indian</item>
-        <item>Pacifika</item>
-        <item>Persian</item>
-        <item>Turkish</item>
-        <item>White European</item>
-        <item>Others</item>
-    </string-array>
-    <string-array name="peopleCompletingSurvey">
-        <item>Parent</item>
-        <item>Relative</item>
-        <item>Health Care Professional</item>
-        <item>Self</item>
+        <item>Middle Eastern</item>
+        <item>South Asian</item>
+        <item>White</item>
         <item>Other</item>
     </string-array>
     <string-array name="countries">
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
+        <item>Afghanistan</item>
+        <item>Albania</item>
+        <item>Algeria</item>
+        <item>American Samoa</item>
+        <item>Angola</item>
+        <item>Argentina</item>
+        <item>Armenia</item>
+        <item>Australia</item>
+        <item>Austria</item>
+        <item>Bahamas</item>
+        <item>Bahrain</item>
+        <item>Bangladesh</item>
+        <item>Belgium</item>
+        <item>Belize</item>
+        <item>Bhutan</item>
+        <item>Bolivia</item>
+        <item>Brazil</item>
+        <item>British Indian Ocean Territory</item>
+        <item>Bulgaria</item>
+        <item>Canada</item>
+        <item>Chile</item>
+        <item>China</item>
+        <item>Costa Rica</item>
+        <item>Dominican Republic</item>
+        <item>Egypt</item>
+        <item>Europe</item>
+        <item>Finland</item>
+        <item>Georgia</item>
+        <item>Germany</item>
+        <item>Ghana</item>
+        <item>Hungary</item>
+        <item>India</item>
+        <item>Iran</item>
+        <item>Iraq</item>
+        <item>Ireland</item>
+        <item>Isle of Man</item>
+        <item>Italy</item>
+        <item>Jamaica</item>
+        <item>Japan</item>
+        <item>Jordan</item>
+        <item>Kuwait</item>
+        <item>Latvia</item>
+        <item>Lebanon</item>
+        <item>Libya</item>
+        <item>Malaysia</item>
+        <item>Malta</item>
+        <item>Mexico</item>
+        <item>Nepal</item>
+        <item>Netherlands</item>
+        <item>New Zealand</item>
+        <item>Nigeria</item>
+        <item>Oman</item>
+        <item>Pakistan</item>
+        <item>Peru</item>
+        <item>Philippines</item>
+        <item>Qatar</item>
+        <item>Romania</item>
+        <item>Russia</item>
+        <item>Saudi Arabia</item>
+        <item>South Africa</item>
+        <item>South Korea</item>
+        <item>Sri Lanka</item>
+        <item>Sudan</item>
+        <item>Sweden</item>
+        <item>Syria</item>
+        <item>Turkey</item>
+        <item>U.S. Outlying Islands</item>
+        <item>United Arab Emirates</item>
+        <item>United Kingdom</item>
+        <item>United States</item>
+        <item>Uzbekistan</item>
+        <item>Virgin Islands, British</item>
+    </string-array>
+    <string-array name="peopleCompletingSurvey">
+        <item>Friend</item>
+        <item>Health Care Professional</item>
+        <item>Parent</item>
+        <item>Relative</item>
+        <item>Self</item>
+        <item>Teacher</item>
+    </string-array>
+    <string-array name="language">
+        <item>Arabic</item>
+        <item>English</item>
+        <item>French</item>
+        <item>Mandarin</item>
+        <item>Portuguese</item>
+        <item>Russian</item>
+        <item>Spanish</item>
+        <item>Swahili</item>
+        <item>Turkish</item>
+        <item>Urdu</item>
     </string-array>
 </resources>

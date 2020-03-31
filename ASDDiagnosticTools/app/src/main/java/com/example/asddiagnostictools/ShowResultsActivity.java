@@ -16,9 +16,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PriorityQueue;
 
 public class ShowResultsActivity extends AppCompatActivity {
 
+    // Order of columns in data model
+    // A1	A2	A3	A4	A5	A6	A7	A8	A9	A10	Age	Sex	Ethnicity	Jaundice	Family_ASD	Residence	Used_App_Before	Language	User	Class
+
+    AQ10QuestionPack _questionPack = null;
     Interpreter tensorflowInterpreter;
     TextView textPrediction;
     Button predictionButton = null;
@@ -30,33 +37,17 @@ public class ShowResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_results);
 
-        //predictionButton = (Button)findViewById(R.id.buttonPredict);
-        //questionButton = (Button)findViewById(R.id.buttonQuestions);
-        //aq1 = (EditText)findViewById(R.id.editTextAq1);
-        //aq2 = (EditText)findViewById(R.id.editTextAq2);
-        //aq3 = (EditText)findViewById(R.id.editTextAq3);
-        //aq4 = (EditText)findViewById(R.id.editTextAq4);
-        //aq5 = (EditText)findViewById(R.id.editTextAq5);
-        //aq6 = (EditText)findViewById(R.id.editTextAq6);
-        //aq7 = (EditText)findViewById(R.id.editTextAq7);
-        //aq8 = (EditText)findViewById(R.id.editTextAq8);
-        //aq9 = (EditText)findViewById(R.id.editTextAq9);
-        //aq10 = (EditText)findViewById(R.id.editTextAq10);
-        //textPrediction = (TextView)findViewById(R.id.textPrediction);
+        _questionPack = AsdAppSettings.getAQ10QuestionPack();
 
-        // Try to Load a Question Pack (as a test)
-        //try {
-            //_aq10QuestionPack = new AQ10QuestionPack(this, "aq10childQuestions");
-
-        //}
-        //catch (IOException ex) {
-            //_aq10QuestionPack = null;
-
-        //}
+        textPrediction = (TextView)findViewById(R.id.textViewPrediction);
 
         try
         {
             tensorflowInterpreter = new Interpreter(loadModelFile());
+
+            //tensorflowInterpreter
+
+            doPrediction();
         }
         catch (Exception ex)
         {
@@ -67,6 +58,16 @@ public class ShowResultsActivity extends AppCompatActivity {
     public void onFinishClicked(View view)
     {
         moveToMainActivity();
+    }
+
+    public void onTestPredictionClicked(View view)
+    {
+        // Case, has ASD
+        // 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 4, 0, 5, 1, 0, 43, 0, 0, 2
+
+        float prediction = doInference(0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 4, 0, 5, 1, 0, 43, 0, 0, 2);
+
+        textPrediction.setText(String.format("%.4f", prediction));
     }
 
     private void moveToMainActivity()
@@ -81,26 +82,79 @@ public class ShowResultsActivity extends AppCompatActivity {
         this.overridePendingTransition(0, 0);
     }
 
-    public void onPredictionClick(View view)
+    public void doPrediction()
     {
-        float prediction = doInference(aq1.getText().toString(),
-                aq2.getText().toString(),
-                aq3.getText().toString(),
-                aq4.getText().toString(),
-                aq5.getText().toString(),
-                aq6.getText().toString(),
-                aq7.getText().toString(),
-                aq8.getText().toString(),
-                aq9.getText().toString(),
-                aq10.getText().toString());
+        float prediction = doInference(
+                _questionPack.getQuestions().get(0).getValueOfAnswer(),
+                _questionPack.getQuestions().get(1).getValueOfAnswer(),
+                _questionPack.getQuestions().get(2).getValueOfAnswer(),
+                _questionPack.getQuestions().get(3).getValueOfAnswer(),
+                _questionPack.getQuestions().get(4).getValueOfAnswer(),
+                _questionPack.getQuestions().get(5).getValueOfAnswer(),
+                _questionPack.getQuestions().get(6).getValueOfAnswer(),
+                _questionPack.getQuestions().get(7).getValueOfAnswer(),
+                _questionPack.getQuestions().get(8).getValueOfAnswer(),
+                _questionPack.getQuestions().get(9).getValueOfAnswer(),
+                _questionPack.get_age(),
+                _questionPack.get_gender(),
+                _questionPack.get_ethnicity(),
+                _questionPack.get_bornWithJaundice() ? 1 : 0,
+                _questionPack.get_immediateFamilyMemberDiagnosedWithAsd() ? 1 : 0,
+                _questionPack.get_countryOfResidence(),
+                _questionPack.get_hasUsedAppBefore() ? 1 : 0,
+                _questionPack.get_langauge(),
+                _questionPack.get_personCompletingTest()
+        );
 
-        textPrediction.setText(String.format("%.4f", prediction));
+        updatePredictionTextView(prediction);
     }
 
-    public float doInference(String aq1, String aq2, String aq3, String aq4, String aq5,
-                             String aq6, String aq7, String aq8, String aq9, String aq10)
+    private void updatePredictionTextView(float prediction)
     {
-        float[] inputValues = new float[10];
+        String predictionText = "";
+
+        if (prediction == 1)
+        {
+            predictionText = "Based on the answers provided you may have Autism.";
+        }
+        else
+        {
+            predictionText = "Based on the answers provided you may NOT have Autism.";
+        }
+
+        predictionText += "\nPlease consult a doctor for a formal diagnosis.";
+        predictionText += "\n";
+        predictionText += "\n=== Diagnostics ===";
+        predictionText += "\nAQ1: " + _questionPack.getQuestions().get(0).getValueOfAnswer() + ", selected answer: " + _questionPack.getQuestions().get(0).getAnswerProvidedByUser();
+        predictionText += "\nAQ2: " + _questionPack.getQuestions().get(1).getValueOfAnswer() + ", selected answer: " + _questionPack.getQuestions().get(1).getAnswerProvidedByUser();
+        predictionText += "\nAQ3: " + _questionPack.getQuestions().get(2).getValueOfAnswer() + ", selected answer: " + _questionPack.getQuestions().get(2).getAnswerProvidedByUser();
+        predictionText += "\nAQ4: " + _questionPack.getQuestions().get(3).getValueOfAnswer() + ", selected answer: " + _questionPack.getQuestions().get(3).getAnswerProvidedByUser();
+        predictionText += "\nAQ5: " + _questionPack.getQuestions().get(4).getValueOfAnswer() + ", selected answer: " + _questionPack.getQuestions().get(4).getAnswerProvidedByUser();
+        predictionText += "\nAQ6: " + _questionPack.getQuestions().get(5).getValueOfAnswer() + ", selected answer: " + _questionPack.getQuestions().get(5).getAnswerProvidedByUser();
+        predictionText += "\nAQ7: " + _questionPack.getQuestions().get(6).getValueOfAnswer() + ", selected answer: " + _questionPack.getQuestions().get(6).getAnswerProvidedByUser();
+        predictionText += "\nAQ8: " + _questionPack.getQuestions().get(7).getValueOfAnswer() + ", selected answer: " + _questionPack.getQuestions().get(7).getAnswerProvidedByUser();
+        predictionText += "\nAQ9: " + _questionPack.getQuestions().get(8).getValueOfAnswer() + ", selected answer: " + _questionPack.getQuestions().get(8).getAnswerProvidedByUser();
+        predictionText += "\nAQ10: " + _questionPack.getQuestions().get(9).getValueOfAnswer() + ", selected answer: " + _questionPack.getQuestions().get(9).getAnswerProvidedByUser();
+        predictionText += "\nAge: " + _questionPack.get_age();
+        predictionText += "\nGender: " + _questionPack.get_gender();
+        predictionText += "\nEthnicity: " + _questionPack.get_ethnicity();
+        predictionText += "\nBorn with Jaundice: " + _questionPack.get_bornWithJaundice();
+        predictionText += "\nFamily Member w/ASD: " + _questionPack.get_immediateFamilyMemberDiagnosedWithAsd();
+        predictionText += "\nCountry of Residence: " + _questionPack.get_countryOfResidence();
+        predictionText += "\nUsed App Before: " +  _questionPack.get_hasUsedAppBefore();
+        predictionText += "\nGet Language: " + _questionPack.get_langauge();
+        predictionText += "\nPerson Completing Test: " + _questionPack.get_personCompletingTest();
+
+        textPrediction.setText(predictionText);
+    }
+
+    public float doInference(int aq1, int aq2, int aq3, int aq4, int aq5,
+                             int aq6, int aq7, int aq8, int aq9, int aq10,
+                             int age, int sex, int ethnicity, int jaundice,
+                             int family_asd, int residence, int used_app_before,
+                             int language, int user)
+    {
+        float[] inputValues = new float[19];
         inputValues[0] = Float.valueOf(aq1);
         inputValues[1] = Float.valueOf(aq2);
         inputValues[2] = Float.valueOf(aq3);
@@ -111,15 +165,21 @@ public class ShowResultsActivity extends AppCompatActivity {
         inputValues[7] = Float.valueOf(aq8);
         inputValues[8] = Float.valueOf(aq9);
         inputValues[9] = Float.valueOf(aq10);
+        inputValues[10] = Float.valueOf(age);
+        inputValues[11] = Float.valueOf(sex);
+        inputValues[12] = Float.valueOf(ethnicity);
+        inputValues[13] = Float.valueOf(jaundice);
+        inputValues[14] = Float.valueOf(family_asd);
+        inputValues[15] = Float.valueOf(residence);
+        inputValues[16] = Float.valueOf(used_app_before);
+        inputValues[17] = Float.valueOf(language);
+        inputValues[18] = Float.valueOf(user);
 
         float[][] outputValues = new float[1][1];
-
         tensorflowInterpreter.run(inputValues, outputValues);
-
         float inferredValue = outputValues[0][0];
 
         return inferredValue;
-
     }
 
 

@@ -22,6 +22,7 @@ public class PersonalQuestionsActivity extends AppCompatActivity {
     private Spinner _personCompletingTestEditor = null;
     private Spinner _countryOfResidenceEditor = null;
     private RadioGroup _takenTestBeforeEditor = null;
+    private Spinner _languageEditor = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class PersonalQuestionsActivity extends AppCompatActivity {
         _personCompletingTestEditor = findViewById(R.id.spinnerWhoIsCompletingTest);
         _countryOfResidenceEditor = findViewById(R.id.spinnerCountryOfResidence);
         _takenTestBeforeEditor = findViewById(R.id.radioGroupHasUsedAppBefore);
+        _languageEditor = findViewById(R.id.spinnerLanguage);
 
         // Setup the dropdown containing ethnicities
         ArrayAdapter<CharSequence> ethnicitiesAdapter = ArrayAdapter.createFromResource(this, R.array.ethnicities, android.R.layout.simple_spinner_item);
@@ -51,6 +53,11 @@ public class PersonalQuestionsActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> countriesAdapter = ArrayAdapter.createFromResource(this, R.array.countries, android.R.layout.simple_spinner_item);
         countriesAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         _countryOfResidenceEditor.setAdapter(countriesAdapter);
+
+        // Setup the dropdown containing languages
+        ArrayAdapter<CharSequence> languagesAdapter = ArrayAdapter.createFromResource(this, R.array.language, android.R.layout.simple_spinner_item);
+        countriesAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        _languageEditor.setAdapter(languagesAdapter);
 
         // This is to prefill the form with values if the user went back in the process so they
         // don't have to enter this information back into the form
@@ -68,11 +75,11 @@ public class PersonalQuestionsActivity extends AppCompatActivity {
             else
                 _ageEditor.setText("");
 
-            // Gender
-            if (_AQ10QuestionPack.get_gender() == "Male") {
+            // Gender; 0 = male, 1 = female
+            if (_AQ10QuestionPack.get_gender() == 0) {
                 _genderEditor.check(R.id.radioButtonMale);
             }
-            else if (_AQ10QuestionPack.get_gender() == "Female") {
+            else if (_AQ10QuestionPack.get_gender() == 1) {
                 _genderEditor.check(R.id.radioButtonFemale);
             }
             else {
@@ -107,6 +114,11 @@ public class PersonalQuestionsActivity extends AppCompatActivity {
                 _takenTestBeforeEditor.check(R.id.radioButtonUsedAppYes);
             else
                 _takenTestBeforeEditor.check(R.id.radioButtonUsedAppNo);
+
+            // Language
+            if (_AQ10QuestionPack.get_langauge() >= 0)
+                _languageEditor.setSelection(_AQ10QuestionPack.get_langauge());
+
         }
     }
 
@@ -143,7 +155,7 @@ public class PersonalQuestionsActivity extends AppCompatActivity {
         if (_AQ10QuestionPack.get_personCompletingTest() < 0)
             isValid =  false;
 
-        if (_AQ10QuestionPack.get_gender().isEmpty())
+        if (_AQ10QuestionPack.get_langauge() < 0)
             isValid = false;
 
         return isValid;
@@ -171,19 +183,19 @@ public class PersonalQuestionsActivity extends AppCompatActivity {
             _AQ10QuestionPack.set_age(-1);
         }
 
-        // Gender
+        // Gender;  0 = male, 1 = female
         switch  (_genderEditor.getCheckedRadioButtonId())
         {
             case R.id.radioButtonMale:
-                _AQ10QuestionPack.set_gender("Male");
+                _AQ10QuestionPack.set_gender(0);
                 break;
 
             case R.id.radioButtonFemale:
-                _AQ10QuestionPack.set_gender("Female");
+                _AQ10QuestionPack.set_gender(1);
                 break;
 
             default:
-                _AQ10QuestionPack.set_gender(null);
+                _AQ10QuestionPack.set_gender(0);
                 break;
         }
 
@@ -229,7 +241,6 @@ public class PersonalQuestionsActivity extends AppCompatActivity {
             _AQ10QuestionPack.set_countryOfResidence(-1);
         }
 
-
         // Taken test before
         switch (_takenTestBeforeEditor.getCheckedRadioButtonId())
         {
@@ -245,6 +256,14 @@ public class PersonalQuestionsActivity extends AppCompatActivity {
                 // Should never occur since an option is always selected due to the default
                 _AQ10QuestionPack.set_hasUsedAppBefore(false);
                 break;
+        }
+
+        // Language
+        if (_languageEditor.getSelectedItem() != null) {
+            _AQ10QuestionPack.set_language(_languageEditor.getSelectedItemPosition());
+        }
+        else {
+            _AQ10QuestionPack.set_language(-1);
         }
     }
 

@@ -26,13 +26,16 @@ public class AQ10QuestionPack {
 
     // Personal information
     private int _age = -1;
-    private String _gender = null;
+
+    // 0 = male, 1 = female
+    private int _gender = -1;
     private int _ethnicity = -1;
     private boolean _bornWithJaundice = false;
     private boolean _immediateFamilyMemberDiagnosedWithAsd = false;
     private int _personCompletingTest = -1;
     private int _countryOfResidence = -1;
     private boolean _hasUsedAppBefore = false;
+    private int _language = -1;
 
     // Import the AQ10 question pack with a matching asset name
     public AQ10QuestionPack(Context context, String assetName) throws IOException {
@@ -99,11 +102,11 @@ public class AQ10QuestionPack {
         this._age = age;
     }
 
-    public String get_gender() {
+    public int get_gender() {
         return _gender;
     }
 
-    public void set_gender(String gender) {
+    public void set_gender(int gender) {
         this._gender = gender;
     }
 
@@ -114,6 +117,10 @@ public class AQ10QuestionPack {
     public void set_ethnicity(int ethnicity) {
         this._ethnicity = ethnicity;
     }
+
+    public int get_langauge() { return _language; }
+
+    public void set_language(int language) {this._language = language; }
 
     public boolean get_bornWithJaundice() {
         return _bornWithJaundice;

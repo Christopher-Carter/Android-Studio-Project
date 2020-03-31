@@ -15,27 +15,43 @@
         android:text="Finish"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPrediction" />
-
-    <TextView
-        android:id="@+id/textViewPrediction"
-        android:layout_width="365dp"
-        android:layout_height="141dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center|top"
-        android:text="PREDICTION"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBasicResults" />
+        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView" />
 
     <TextView
         android:id="@+id/textViewBasicResults"
-        android:layout_width="366dp"
-        android:layout_height="81dp"
+        android:layout_width="369dp"
+        android:layout_height="88dp"
         android:layout_marginTop="24dp"
         android:gravity="center|top"
-        android:text="BASIC RESULTS AND DEBUG INFO"
+        android:text="Results of your ASD Screening"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="330dp"
+        android:layout_height="447dp"
+        android:layout_marginTop="24dp"
+        android:fillViewport="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBasicResults">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textViewPrediction"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|top"
+                android:text="PREDICTION"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
